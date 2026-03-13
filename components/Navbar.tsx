@@ -76,7 +76,8 @@ export default function Navbar() {
     { name: "Diet Planner", id: "/fuel", isExternal: false, isRoute: true },
     { name: "Calculators", id: "/calculators", isExternal: false, isRoute: true },
     { name: "Pricing", id: "/pricing", isExternal: false, isRoute: true },
-    { name: "Quotes", id: "/quotes", isExternal: false, isRoute: true }
+    { name: "Quotes", id: "/quotes", isExternal: false, isRoute: true },
+    { name: "Contact", id: "contact", isExternal: false, isRoute: false }
   ];
 
   const scrollToSection = (id: string) => {
