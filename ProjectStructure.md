@@ -1,6 +1,6 @@
 # Behind the Iron: Project Structure 🏗️
 
-This project isn't just a collection of files; it's a carefully organized machine. Here is exactly how the **Brother's Fitness** codebase is built and where everything lives.
+This project isn't just a collection of files; it's a carefully organized machine. Here is exactly how the **Gym Sphere** codebase is built and where everything lives.
 
 ## 📂 Root Level - The Command Center
 The root of the project contains all the core configurations that hold the engine together.
