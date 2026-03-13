@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 import { ContactSchema } from "@/lib/validation";
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     const { error: dbError } = await supabase.from('contact_submissions').insert([{
       name,
       email,
-      phone: phone || null,
+      phone: phone || '',
       message
     }]);
 
