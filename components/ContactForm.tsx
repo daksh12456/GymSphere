@@ -129,7 +129,7 @@ export default function ContactForm() {
                       </motion.a>
 
                       <motion.a
-                        href={`https://wa.me/${whatsappNumber}?text=Hi,%20I'm%20interested%20in%20joining%20Gym%20Sphere!`}
+                        href={`https://wa.me/${whatsappNumber}?text=Hi,%20I%20am%20interested%20in%20joining%20Gym%20Sphere!`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 bg-[#25D366] text-white px-3 py-3 md:px-4 md:py-3.5 text-xs font-mono font-bold uppercase tracking-wider hover:bg-white hover:text-[#25D366] transition-all flex items-center justify-center gap-2 rounded"
@@ -163,7 +163,7 @@ export default function ContactForm() {
                       </motion.a>
 
                       <motion.a
-                        href="https://wa.me/919131272754?text=Hi,%20I'm%20interested%20in%20joining%20Gym%20Sphere!"
+                        href="https://wa.me/919131272754?text=Hi,%20I%20am%20interested%20in%20joining%20Gym%20Sphere!"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 bg-[#25D366] text-white px-3 py-3 md:px-4 md:py-3.5 text-xs font-mono font-bold uppercase tracking-wider hover:bg-white hover:text-[#25D366] transition-all flex items-center justify-center gap-2 rounded"
