@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { Flame, Brain, Target, Laugh, Sparkles, ArrowLeft, Shuffle, Heart } from "lucide-react";

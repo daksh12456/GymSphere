@@ -328,13 +328,13 @@ function FuelSynthesizerContent() {
 
         try {
             // Using Firebase UID as identifiers for better tracking if available, else localStorage
-            const userId = user?.firebase_uid || localStorage.getItem('brofit_user_id') || 'unknown';
+            const userId = user?.firebase_uid || localStorage.getItem('GymSphere_user_id') || 'unknown';
 
             const res = await fetch("/api/generate-diet", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "x-brofit-user-id": userId
+                    "x-GymSphere-user-id": userId
                 },
                 body: JSON.stringify({
                     calories: calculatedCalories ? calculatedCalories : (calories ? parseFloat(calories) : undefined),
@@ -422,7 +422,7 @@ function FuelSynthesizerContent() {
                 heightLeft -= pdfHeight;
             }
 
-            pdf.save(`BroFit_Mission_Directive_${new Date().toISOString().split('T')[0]}.pdf`);
+            pdf.save(`GymSphere_Mission_Directive_${new Date().toISOString().split('T')[0]}.pdf`);
         } catch (err) {
             console.error("PDF Fail:", err);
             alert("Tactical Printer Jammed. Please retry.");

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useRef, useEffect, useState, useMemo, useId, FC, PointerEvent } from "react";
 
@@ -32,7 +32,7 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
   const dirRef = useRef<"left" | "right">(direction);
   const velRef = useRef(0);
 
-  const dumbbellIcon = " 🏋️ ";
+  const dumbbellIcon = " ??? ";
   const textWithIcon = text + dumbbellIcon;
 
   const textLength = spacing;

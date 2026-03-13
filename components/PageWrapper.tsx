@@ -21,13 +21,13 @@ export default function PageWrapper({ children }: { children: React.ReactNode })
             setShowLoader(false);
             setShowContent(true);
             document.body.style.overflow = "";
-            sessionStorage.setItem("brofit_loaded", JSON.stringify({ timestamp: Date.now() }));
+            sessionStorage.setItem("GymSphere_loaded", JSON.stringify({ timestamp: Date.now() }));
         }, 500);
     }, [videoEnded]);
 
     useEffect(() => {
         // Check if returning user synchronously
-        const hasLoadedData = sessionStorage.getItem("brofit_loaded");
+        const hasLoadedData = sessionStorage.getItem("GymSphere_loaded");
         let isReturning = false;
 
         if (hasLoadedData) {
@@ -67,7 +67,7 @@ export default function PageWrapper({ children }: { children: React.ReactNode })
             setShowContent(true);
             setVideoEnded(true);
             document.body.style.overflow = "";
-            sessionStorage.setItem("brofit_loaded", JSON.stringify({ timestamp: Date.now() }));
+            sessionStorage.setItem("GymSphere_loaded", JSON.stringify({ timestamp: Date.now() }));
         }, 4000);
 
         return () => {
@@ -90,7 +90,7 @@ export default function PageWrapper({ children }: { children: React.ReactNode })
                         exit={{ opacity: 0, transition: { duration: 0.8, ease: "easeInOut" } }}
                     >
                         <video
-                            src="/assets/Brofitlottie.webm"
+                            src="/assets/GymSpherelottie.webm"
                             autoPlay
                             muted
                             playsInline

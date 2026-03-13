@@ -43,7 +43,7 @@ export default function TacticalChatbot() {
 
     // Load language from localStorage on mount
     useEffect(() => {
-        const saved = localStorage.getItem("brofit_chat_lang");
+        const saved = localStorage.getItem("GymSphere_chat_lang");
         if (saved === "en" || saved === "hi") {
             setLanguage(saved);
         }
@@ -52,7 +52,7 @@ export default function TacticalChatbot() {
     // Save language to localStorage when changed
     const handleLanguageChange = (newLang: "en" | "hi") => {
         setLanguage(newLang);
-        localStorage.setItem("brofit_chat_lang", newLang);
+        localStorage.setItem("GymSphere_chat_lang", newLang);
     };
 
     useEffect(() => {
@@ -96,12 +96,12 @@ export default function TacticalChatbot() {
         setLoading(true);
 
         try {
-            const userId = localStorage.getItem('brofit_user_id') || 'unknown';
+            const userId = localStorage.getItem('GymSphere_user_id') || 'unknown';
             const res = await fetch("/api/chat", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "x-brofit-user-id": userId
+                    "x-GymSphere-user-id": userId
                 },
                 body: JSON.stringify({
                     message: text,
@@ -154,7 +154,7 @@ export default function TacticalChatbot() {
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0, opacity: 0 }}
                         onClick={() => setIsOpen(true)}
-                        aria-label="Open BroFit AI chat"
+                        aria-label="Open GymSphere AI chat"
                     >
                         <Cpu className="w-6 h-6 text-white animate-pulse relative z-10" />
 
@@ -196,7 +196,7 @@ export default function TacticalChatbot() {
                             <div className="bg-gym-red p-4 flex justify-between items-center shadow-lg">
                                 <div className="flex items-center gap-3">
                                     <Cpu className="w-5 h-5 text-white" />
-                                    <span className="font-black uppercase tracking-widest text-sm text-white">BroFit AI</span>
+                                    <span className="font-black uppercase tracking-widest text-sm text-white">GymSphere AI</span>
                                     {isLoggedIn ? (
                                         <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full font-bold">
                                             {remainingCredits}/{MAX_DAILY_CREDITS}
@@ -327,7 +327,7 @@ export default function TacticalChatbot() {
                                         <input
                                             value={input}
                                             onChange={(e) => setInput(e.target.value)}
-                                            placeholder={language === "hi" ? "Poochhein..." : "Ask BroFit..."}
+                                            placeholder={language === "hi" ? "Poochhein..." : "Ask GymSphere..."}
                                             className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-gym-red transition-colors placeholder:text-gray-600"
                                         />
                                         <button

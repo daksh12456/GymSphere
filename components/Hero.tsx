@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -91,14 +91,7 @@ export default function Hero() {
       )}
 
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center w-full max-w-7xl px-4 text-center">
-        <motion.div
-          className="mb-4 md:mb-6 font-mono text-xs md:text-sm tracking-ultra text-gray-400 uppercase font-medium"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          EST. 2024 // GYM OS
-        </motion.div>
+
 
         <motion.div
           className="mb-6 md:mb-8"

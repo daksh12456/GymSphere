@@ -115,7 +115,7 @@ export default function MembersPage() {
             const data = await res.json();
 
             if (res.ok && data.leads) {
-                const readLeads = JSON.parse(localStorage.getItem('brofit_admin_read_leads') || '[]');
+                const readLeads = JSON.parse(localStorage.getItem('GymSphere_admin_read_leads') || '[]');
                 const unread = data.leads.filter((l: { id: string }) => !readLeads.includes(l.id)).length;
                 setUnreadLeadsCount(unread);
             }

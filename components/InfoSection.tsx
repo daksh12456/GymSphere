@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Clock } from "lucide-react";
 import { motion, useInView } from "framer-motion";
@@ -71,7 +71,7 @@ export default function InfoSection() {
                     06:00 AM - 10:00 AM
                   </motion.p>
                   <p className="text-xs md:text-sm text-gray-300 mt-1">
-                    ✓ Men and Women Together
+                    ? Men and Women Together
                   </p>
                 </motion.div>
 
@@ -88,7 +88,7 @@ export default function InfoSection() {
                     04:30 PM - 06:30 PM
                   </motion.p>
                   <p className="text-xs md:text-sm text-gym-red mt-1 font-medium">
-                    ⚠ Strictly Women Only
+                    ? Strictly Women Only
                   </p>
                 </motion.div>
 
@@ -105,7 +105,7 @@ export default function InfoSection() {
                     06:30 PM - 10:00 PM
                   </motion.p>
                   <p className="text-xs md:text-sm text-gray-300 mt-1">
-                    ✓ Men and Women Together
+                    ? Men and Women Together
                   </p>
                 </motion.div>
 
@@ -125,7 +125,7 @@ export default function InfoSection() {
                   transition={{ delay: 0.5 }}
                 >
                   <p className="text-xs font-mono font-bold uppercase tracking-wider text-gym-red mb-1.5">
-                    ℹ SCHEDULE SUMMARY
+                    ? SCHEDULE SUMMARY
                   </p>
                   <p className="text-xs md:text-sm text-white/90 leading-relaxed">
                     <strong>Mixed Training:</strong> 6:00-10:00 AM & 6:30-10:00 PM<br />

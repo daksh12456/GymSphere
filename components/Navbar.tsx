@@ -41,10 +41,10 @@ export default function Navbar() {
       window.addEventListener('resize', handleResize);
 
       // Ensure Rate Limit ID exists
-      if (!localStorage.getItem('brofit_user_id')) {
+      if (!localStorage.getItem('GymSphere_user_id')) {
         // Fallback for environments where crypto.randomUUID is not available (insecure contexts)
         const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2);
-        localStorage.setItem('brofit_user_id', uniqueId);
+        localStorage.setItem('GymSphere_user_id', uniqueId);
       }
 
       return () => window.removeEventListener('resize', handleResize);

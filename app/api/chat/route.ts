@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    const headerUserId = req.headers.get("x-brofit-user-id");
+    const headerUserId = req.headers.get("x-GymSphere-user-id");
 
     if (!headerUserId || headerUserId === 'unknown') {
         return NextResponse.json(
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
                 : "Respond in English.";
 
             const systemPrompt = `
-            You are 'BroFit AI', an expert fitness and health assistant for Indian users.
+            You are 'GymSphere AI', an expert fitness and health assistant for Indian users.
             Provide expert advice on fitness, nutrition, and wellness.
             
             User Context:

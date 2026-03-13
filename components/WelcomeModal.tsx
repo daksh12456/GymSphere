@@ -49,7 +49,7 @@ export default function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
 
                             <div className="space-y-4">
                                 <p className="text-gray-300 leading-relaxed font-medium">
-                                    Welcome back to <span className="text-white font-bold">BroFit AI</span>.
+                                    Welcome back to <span className="text-white font-bold">GymSphere AI</span>.
                                 </p>
 
                                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg flex gap-4">

@@ -59,7 +59,7 @@ export default function LeadsInbox({
         if (isOpen) {
             fetchLeads();
             // Load read status from local storage
-            const saved = localStorage.getItem('brofit_admin_read_leads');
+            const saved = localStorage.getItem('GymSphere_admin_read_leads');
             if (saved) setReadLeads(JSON.parse(saved));
 
             // Poll for new messages every 10 seconds while open
@@ -72,7 +72,7 @@ export default function LeadsInbox({
         if (!readLeads.includes(id)) {
             const updated = [...readLeads, id];
             setReadLeads(updated);
-            localStorage.setItem('brofit_admin_read_leads', JSON.stringify(updated));
+            localStorage.setItem('GymSphere_admin_read_leads', JSON.stringify(updated));
         }
     };
 
@@ -266,10 +266,10 @@ export default function LeadsInbox({
                                         <MessageSquare className="w-full h-full text-gray-500/30" />
                                         <div className="absolute top-0 right-0 w-8 h-8 bg-[#25D366] rounded-full animate-bounce" />
                                     </div>
-                                    <h3 className="text-2xl text-[#e9edef] font-light mb-4">BroFit Inbox for WhatsApp</h3>
+                                    <h3 className="text-2xl text-[#e9edef] font-light mb-4">GymSphere Inbox for WhatsApp</h3>
                                     <p className="text-[#8696a0] max-w-md text-sm leading-relaxed">
                                         Send and receive messages without keeping your phone online.<br />
-                                        Use BroFit Web on up to 4 linked devices and 1 phone.
+                                        Use GymSphere Web on up to 4 linked devices and 1 phone.
                                     </p>
                                     <div className="mt-8 flex items-center gap-2 text-[#8696a0] text-xs">
                                         <Lock className="w-3 h-3" /> End-to-end encrypted

@@ -49,9 +49,9 @@ export function GamificationProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         if (typeof window === "undefined") return;
 
-        const storedMedals = localStorage.getItem("brofit_medals");
-        const storedStreak = localStorage.getItem("brofit_streak");
-        const lastVisit = localStorage.getItem("brofit_last_visit");
+        const storedMedals = localStorage.getItem("GymSphere_medals");
+        const storedStreak = localStorage.getItem("GymSphere_streak");
+        const lastVisit = localStorage.getItem("GymSphere_last_visit");
 
         let currentMedals: MedalId[] = storedMedals ? JSON.parse(storedMedals) : [];
         let currentStreak = storedStreak ? parseInt(storedStreak) : 0;
@@ -86,9 +86,9 @@ export function GamificationProvider({ children }: { children: ReactNode }) {
         }
 
         // Save state
-        localStorage.setItem("brofit_medals", JSON.stringify(currentMedals));
-        localStorage.setItem("brofit_streak", currentStreak.toString());
-        localStorage.setItem("brofit_last_visit", today);
+        localStorage.setItem("GymSphere_medals", JSON.stringify(currentMedals));
+        localStorage.setItem("GymSphere_streak", currentStreak.toString());
+        localStorage.setItem("GymSphere_last_visit", today);
 
         setMedals(currentMedals);
         setVisitStreak(currentStreak);
@@ -98,7 +98,7 @@ export function GamificationProvider({ children }: { children: ReactNode }) {
         if (!medals.includes(medalId)) {
             const newMedals = [...medals, medalId];
             setMedals(newMedals);
-            localStorage.setItem("brofit_medals", JSON.stringify(newMedals));
+            localStorage.setItem("GymSphere_medals", JSON.stringify(newMedals));
         }
     };
 

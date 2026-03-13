@@ -1,5 +1,5 @@
 /**
- * User Authentication Context for BroFit customers
+ * User Authentication Context for GymSphere customers
  * Uses Firebase Google Sign-In for authentication
  * Supabase for user profile and daily credits
  */
@@ -98,12 +98,12 @@ export function UserAuthProvider({ children }: { children: ReactNode }) {
     // Listen to Firebase auth state
     useEffect(() => {
         const auth = getFirebaseAuth();
-        const isAuthPending = sessionStorage.getItem('brofit_auth_in_progress') === 'true';
+        const isAuthPending = sessionStorage.getItem('GymSphere_auth_in_progress') === 'true';
 
         // Check specifically for redirect result
         getRedirectResult(auth)
             .then(async (result) => {
-                sessionStorage.removeItem('brofit_auth_in_progress'); // Clear flag directly
+                sessionStorage.removeItem('GymSphere_auth_in_progress'); // Clear flag directly
 
                 if (result?.user) {
                     console.log('Auth: Redirect successful', result.user.uid);
@@ -130,7 +130,7 @@ export function UserAuthProvider({ children }: { children: ReactNode }) {
                 }
             })
             .catch((error) => {
-                sessionStorage.removeItem('brofit_auth_in_progress');
+                sessionStorage.removeItem('GymSphere_auth_in_progress');
                 console.error('Auth: Redirect error', error);
                 const code = error?.code;
                 if (code === 'auth/unauthorized-domain') {
@@ -145,10 +145,10 @@ export function UserAuthProvider({ children }: { children: ReactNode }) {
             setFirebaseUser(fbUser);
 
             if (fbUser) {
-                localStorage.setItem('brofit_user_id', fbUser.uid);
+                localStorage.setItem('GymSphere_user_id', fbUser.uid);
                 await loadUserProfile(fbUser);
             } else {
-                localStorage.removeItem('brofit_user_id');
+                localStorage.removeItem('GymSphere_user_id');
                 setUser(null);
                 setIsLoading(false);
             }
@@ -337,12 +337,12 @@ export function UserAuthProvider({ children }: { children: ReactNode }) {
             if (isMobile) {
                 const toastId = toast.loading("Redirecting to Google...", { duration: 10000 });
                 try {
-                    sessionStorage.setItem('brofit_auth_in_progress', 'true');
+                    sessionStorage.setItem('GymSphere_auth_in_progress', 'true');
                     await signInWithRedirect(auth, provider);
                     // The page will unload here, so success/loading state persists
                     return { success: true };
                 } catch (e) {
-                    sessionStorage.removeItem('brofit_auth_in_progress');
+                    sessionStorage.removeItem('GymSphere_auth_in_progress');
                     toast.dismiss(toastId);
                     console.error("Redirect Error:", e);
                     const msg = e instanceof Error ? e.message : "Redirect failed";
@@ -363,7 +363,7 @@ export function UserAuthProvider({ children }: { children: ReactNode }) {
 
                     if (code === 'auth/popup-blocked' || code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
                         toast.info("Popup blocked. Redirecting instead...", { duration: 4000 });
-                        sessionStorage.setItem('brofit_auth_in_progress', 'true');
+                        sessionStorage.setItem('GymSphere_auth_in_progress', 'true');
                         await signInWithRedirect(auth, provider);
                         return { success: true };
                     } else {

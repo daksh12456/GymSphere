@@ -32,7 +32,7 @@ describe('Rate Limiter', () => {
 describe('Validation Schemas', () => {
     describe('LoginSchema', () => {
         it('should validate correct password', () => {
-            const result = LoginSchema.safeParse({ password: 'BroFit@Aman2026' });
+            const result = LoginSchema.safeParse({ password: 'GymSphere@Aman2026' });
             expect(result.success).toBe(true);
         });
 

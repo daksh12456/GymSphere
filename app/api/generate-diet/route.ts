@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    const headerUserId = req.headers.get("x-brofit-user-id");
+    const headerUserId = req.headers.get("x-GymSphere-user-id");
 
     if (!headerUserId || headerUserId === 'unknown') {
         return NextResponse.json(
@@ -86,7 +86,7 @@ export async function POST(req: Request) {
         const calorieAdjustment = Math.round(rateNum * 1100);
 
         const prompt = `
-      You are an expert fitness nutritionist for 'BroFit', optimizing for an **Indian User**.
+      You are an expert fitness nutritionist for 'GymSphere', optimizing for an **Indian User**.
       
       **User Biometrics**
       - Gender: ${gender}

@@ -93,7 +93,7 @@ export default function TrophyRoom({ isModal = false, onClose }: { isModal?: boo
         , [medals.length, allMedals.length]);
 
     useEffect(() => {
-        const viewed = localStorage.getItem('brofit_trophy_seen');
+        const viewed = localStorage.getItem('GymSphere_trophy_seen');
         if (!viewed) setHasViewed(false);
     }, []);
 
@@ -121,7 +121,7 @@ export default function TrophyRoom({ isModal = false, onClose }: { isModal?: boo
         setIsOpen(true);
         if (!hasViewed) {
             setHasViewed(true);
-            localStorage.setItem('brofit_trophy_seen', 'true');
+            localStorage.setItem('GymSphere_trophy_seen', 'true');
         }
     };
 
