@@ -31,6 +31,7 @@ export const MODEL_STACK: ModelConfig[] = [
     { id: "gpt-4o-mini", provider: "openai", name: "GPT-4o Mini (OpenAI)" },
     { id: "gemini-2.0-flash", provider: "google", name: "Gemini 2.0 Flash (Google)" },
     { id: "gemini-1.5-flash", provider: "google", name: "Gemini 1.5 Flash (Google)" },
+    { id: "gemini-1.5-flash-8b", provider: "google", name: "Gemini 1.5 Flash-8b (Google)" },
     { id: "gemini-1.5-pro", provider: "google", name: "Gemini 1.5 Pro (Google)" },
 ];
 
@@ -153,5 +154,5 @@ export async function generateTextWithFallback(config: AIRequestConfig): Promise
         }
     }
 
-    throw new Error(`All AI models failed. Errors: ${errors.join(", ")}`);
+    throw new Error(`All AI models failed. [${errors.join(" | ")}]`);
 }
