@@ -30,6 +30,8 @@ interface ModelConfig {
 export const MODEL_STACK: ModelConfig[] = [
     { id: "gpt-4o-mini", provider: "openai", name: "GPT-4o Mini (OpenAI)" },
     { id: "gemini-2.0-flash", provider: "google", name: "Gemini 2.0 Flash (Google)" },
+    { id: "gemini-1.5-flash", provider: "google", name: "Gemini 1.5 Flash (Google)" },
+    { id: "gemini-1.5-pro", provider: "google", name: "Gemini 1.5 Pro (Google)" },
 ];
 
 // Initialize Clients (Lazy)
