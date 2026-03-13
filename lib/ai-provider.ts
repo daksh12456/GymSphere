@@ -28,6 +28,10 @@ interface ModelConfig {
 
 // Unified Model Stack - Final Simplified Configuration
 export const MODEL_STACK: ModelConfig[] = [
+    { id: "llama-3.3-70b-versatile", provider: "groq", name: "Llama 3.3 70B (Groq)" },
+    { id: "llama-3.1-8b-instant", provider: "groq", name: "Llama 3.1 8B (Groq)" },
+    { id: "mixtral-8x7b-32768", provider: "groq", name: "Mixtral 8x7B (Groq)" },
+    { id: "deepseek-chat", provider: "deepseek", name: "DeepSeek Chat (DeepSeek)" },
     { id: "gpt-4o-mini", provider: "openai", name: "GPT-4o Mini (OpenAI)" },
     { id: "gemini-2.0-flash", provider: "google", name: "Gemini 2.0 Flash (Google)" },
     { id: "gemini-1.5-flash", provider: "google", name: "Gemini 1.5 Flash (Google)" },
