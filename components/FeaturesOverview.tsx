@@ -53,7 +53,7 @@ const features = [
         icon: <MessageCircle className="w-6 h-6" />,
         title: "Contact Us",
         description: "Get in touch or visit our gym.",
-        link: "/contact",
+        link: "/#contact",
         color: "text-pink-400"
     }
 ];
