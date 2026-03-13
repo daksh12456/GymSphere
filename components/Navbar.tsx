@@ -1,0 +1,406 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { Menu, X, ArrowRight, Volume2, VolumeX, Instagram, MessageCircle, User, Trophy } from "lucide-react";
+import { useTacticalSound } from "@/components/TacticalSoundContext";
+import { useAdmin } from "@/lib/auth-context";
+import { useUserAuth } from "@/lib/user-auth-context";
+import TrophyRoom from "@/components/TrophyRoom";
+import dynamic from "next/dynamic";
+import WelcomeModal from './WelcomeModal';
+import Image from "next/image";
+
+// Lazy load modals
+const ProfileModal = dynamic(() => import("@/components/ProfileModal"), { ssr: false });
+const LoginModal = dynamic(() => import("@/components/LoginModal"), { ssr: false });
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const { showLoginModal, setShowLoginModal, showWelcome, setShowWelcome } = useUserAuth();
+  const [showTrophyRoom, setShowTrophyRoom] = useState(false);
+  const { scrollY } = useScroll();
+  const { soundEnabled, toggleSound } = useTacticalSound();
+  const { user, isLoggedIn, isLoading } = useUserAuth();
+  useAdmin(); // Keep the hook call for context
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 20);
+  });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsMobile(window.innerWidth < 768);
+      const handleResize = () => setIsMobile(window.innerWidth < 768);
+      window.addEventListener('resize', handleResize);
+
+      // Ensure Rate Limit ID exists
+      if (!localStorage.getItem('brofit_user_id')) {
+        // Fallback for environments where crypto.randomUUID is not available (insecure contexts)
+        const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+        localStorage.setItem('brofit_user_id', uniqueId);
+      }
+
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    // Cleanup: Always restore scroll on unmount or state change
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  // Additional cleanup on component unmount
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  const menuItems = [
+    { name: "Home", id: "/", isExternal: false, isRoute: true },
+    { name: "Workouts", id: "/workouts", isExternal: false, isRoute: true },
+    { name: "Diet Planner", id: "/fuel", isExternal: false, isRoute: true },
+    { name: "Calculators", id: "/calculators", isExternal: false, isRoute: true },
+    { name: "Pricing", id: "/pricing", isExternal: false, isRoute: true },
+    { name: "Quotes", id: "/quotes", isExternal: false, isRoute: true }
+  ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const navbarHeight = 80;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: elementPosition - navbarHeight,
+        behavior: "smooth"
+      });
+      setIsOpen(false);
+    } else {
+      // If element not found (e.g. we are on /workouts), redirect to home with hash
+      window.location.href = `/#${id}`;
+      setIsOpen(false);
+    }
+  };
+
+  const handleMenuClick = (item: typeof menuItems[0]) => {
+    if (item.isRoute) {
+      // Internal route navigation
+      window.location.href = item.id;
+      setIsOpen(false);
+    } else {
+      scrollToSection(item.id);
+    }
+  };
+
+  return (
+    <>
+      {/* Fixed Navbar - always on top */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-300 ${isScrolled
+          ? 'bg-black/50 backdrop-blur-xl border-b border-white/5 shadow-sm'
+          : 'bg-transparent backdrop-blur-none'
+          }`}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            {/* Logo */}
+            <motion.button
+              onClick={() => {
+                if (pathname === '/') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                  router.push('/');
+                }
+              }}
+              className="relative z-50 group"
+              whileHover={!isMobile ? { scale: 1.05 } : undefined}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="text-base sm:text-lg md:text-xl lg:text-3xl font-display font-black uppercase tracking-tighter">
+                <span className="text-white group-hover:text-gym-red transition-colors duration-300">
+                  GYM
+                </span>
+                <span className="text-gym-red">_</span>
+                <span className="text-white group-hover:text-gym-red transition-colors duration-300">
+                  SPHERE
+                </span>
+              </span>
+            </motion.button>
+
+            {/* Action Buttons */}
+            <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
+              {/* Instagram */}
+              <motion.a
+                href="https://www.instagram.com/daxxshh.__?igsh=a3p0N2o1dm5senU1&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 sm:p-2.5 text-gray-400 hover:text-gym-red transition-colors"
+                aria-label="Instagram"
+                whileHover={!isMobile ? { scale: 1.1, rotate: 5 } : undefined}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Instagram className="w-4 h-4 sm:w-6 sm:h-6" />
+              </motion.a>
+
+              {/* WhatsApp */}
+              {/* WhatsApp */}
+              <motion.a
+                href="https://wa.me/919131179343?text=Hi,%20I'm%20interested%20in%20joining%20Gym%20Sphere!"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 sm:p-2.5 text-gray-400 hover:text-[#25D366] transition-colors"
+                whileHover={!isMobile ? { scale: 1.1 } : undefined}
+                whileTap={{ scale: 0.9 }}
+              >
+                <MessageCircle className="w-4 h-4 sm:w-6 sm:h-6" />
+              </motion.a>
+
+              {/* Profile Button (replaces Trophy) */}
+              <motion.button
+                onClick={() => {
+                  if (isLoggedIn) {
+                    setShowProfileModal(true);
+                  } else {
+                    setShowLoginModal(true);
+                  }
+                }}
+                className="p-2.5 sm:p-2.5 text-gray-400 hover:text-gym-red transition-colors"
+                aria-label="Profile"
+                whileHover={!isMobile ? { scale: 1.1 } : undefined}
+                whileTap={{ scale: 0.9 }}
+              >
+                {isLoading ? (
+                  <div className="w-4 h-4 sm:w-6 sm:h-6 rounded-full bg-gray-600 animate-pulse" />
+                ) : isLoggedIn && user?.photo_url ? (
+                  <Image
+                    src={user.photo_url}
+                    alt="Profile"
+                    width={24}
+                    height={24}
+                    className="w-6 h-6 rounded-full object-cover border border-gym-red"
+                  />
+                ) : (
+                  <User className="w-4 h-4 sm:w-6 sm:h-6" />
+                )}
+              </motion.button>
+
+              {/* Hamburger Menu */}
+              <motion.button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2.5 sm:p-2.5 text-gray-400 hover:text-gym-red transition-colors"
+                aria-label="Toggle Menu"
+                whileHover={!isMobile ? { scale: 1.1 } : undefined}
+                whileTap={{ scale: 0.9 }}
+              >
+                {isOpen ? (
+                  <X className="w-5 h-5 sm:w-7 sm:h-7" />
+                ) : (
+                  <Menu className="w-5 h-5 sm:w-7 sm:h-7" />
+                )}
+              </motion.button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Spacer to prevent content overlap */}
+      <div className="h-16 sm:h-20" />
+
+      {/* Full Screen Menu - Redesigned */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 bg-black/98 backdrop-blur-xl z-40"
+            >
+              {/* Subtle gradient accents - desktop only */}
+              {!isMobile && (
+                <>
+                  <div className="absolute top-0 left-0 w-96 h-96 bg-gym-red/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+                  <div className="absolute bottom-0 right-0 w-96 h-96 bg-gym-red/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+                </>
+              )}
+            </motion.div>
+
+            {/* Menu Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 z-50 flex flex-col items-center px-6 sm:px-8 pt-20 pb-6"
+            >
+              {/* Navigation Items - Scrollable Container */}
+              <div className="w-full max-w-lg overflow-y-auto overflow-x-hidden flex-1 py-4 scrollbar-hide">
+                <motion.nav
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  variants={{
+                    hidden: { transition: { staggerChildren: 0.03, staggerDirection: -1 } },
+                    visible: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } }
+                  }}
+                  className="flex flex-col items-stretch gap-2 sm:gap-3"
+                >
+                  {menuItems.map((item, index) => {
+                    const isActive = pathname === item.id || (pathname === "/" && item.id === "/");
+                    return (
+                      <motion.button
+                        key={item.name}
+                        onClick={() => handleMenuClick(item)}
+                        variants={{
+                          hidden: { opacity: 0, y: 20 },
+                          visible: { opacity: 1, y: 0 }
+                        }}
+                        whileHover={!isMobile ? { scale: 1.02, x: 10 } : undefined}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full group"
+                        custom={index}
+                      >
+                        <div className={`flex items-center justify-between px-5 py-3 sm:py-4 border rounded-lg transition-all duration-200 ${isActive
+                          ? "border-gym-red bg-gym-red/20 shadow-[0_0_15px_rgba(215,25,33,0.3)]"
+                          : "border-white/10 hover:border-gym-red/50 bg-white/5 hover:bg-gym-red/10"
+                          }`}>
+                          <span className={`text-base sm:text-lg md:text-xl font-display font-bold uppercase tracking-wide transition-colors ${isActive ? "text-gym-red" : "text-white group-hover:text-gym-red"
+                            }`}>
+                            {item.name}
+                          </span>
+                          <ArrowRight className={`w-4 h-4 sm:w-5 sm:h-5 transition-all ${isActive ? "text-gym-red" : "text-gray-500 group-hover:text-gym-red group-hover:translate-x-1"
+                            }`} />
+                        </div>
+                      </motion.button>
+                    );
+                  })}
+                </motion.nav>
+
+                {/* Footer / Connect Section */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="mt-8 pt-6 border-t border-white/10 space-y-6"
+                >
+                  {/* Trophy Room Button */}
+                  <div className="flex justify-center">
+                    <button
+                      onClick={() => {
+                        setShowTrophyRoom(true);
+                        setIsOpen(false);
+                      }}
+                      className="flex items-center gap-2 px-6 py-3 bg-yellow-500/10 border border-yellow-500/30 rounded-full hover:bg-yellow-500/20 transition-colors"
+                    >
+                      <Trophy className="w-5 h-5 text-yellow-500" />
+                      <span className="text-sm font-mono text-yellow-500 uppercase tracking-widest">
+                        Trophy Room
+                      </span>
+                    </button>
+                  </div>
+
+                  {/* Sound Toggle in Menu */}
+                  <div className="flex justify-center">
+                    <button
+                      onClick={toggleSound}
+                      className="flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors"
+                    >
+                      <span className="text-sm font-mono text-gray-400 uppercase tracking-widest">
+                        {soundEnabled ? 'Sound On' : 'Sound Off'}
+                      </span>
+                      {soundEnabled ? (
+                        <Volume2 className="w-5 h-5 text-gym-red" />
+                      ) : (
+                        <VolumeX className="w-5 h-5 text-gray-500" />
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Social Links */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-gray-500 text-center">
+                        Connect with Aman
+                      </p>
+                      <div className="flex justify-center gap-3">
+                        <motion.a
+                          href="https://www.instagram.com/daxxshh.__?igsh=a3p0N2o1dm5senU1&utm_source=qr"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3 bg-white/5 rounded-lg text-gray-400 hover:text-gym-red transition-colors"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <Instagram className="w-5 h-5" />
+                        </motion.a>
+                        <motion.a
+                          href="https://wa.me/919131179343"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3 bg-white/5 rounded-lg text-gray-400 hover:text-[#25D366] transition-colors"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <MessageCircle className="w-5 h-5" />
+                        </motion.a>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="text-[10px] font-mono uppercase tracking-widest text-gray-500 text-center">
+                        Call Pradeep
+                      </p>
+                      <div className="flex justify-center gap-3">
+                        <motion.a
+                          href="tel:+919131272754"
+                          className="p-3 bg-white/5 rounded-lg text-gray-400 hover:text-gym-red transition-colors"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <MessageCircle className="w-5 h-5" />
+                        </motion.a>
+                        <motion.a
+                          href="https://wa.me/919131272754"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3 bg-white/5 rounded-lg text-gray-400 hover:text-[#25D366] transition-colors"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <MessageCircle className="w-5 h-5" />
+                        </motion.a>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Modals */}
+      <ProfileModal isOpen={showProfileModal} onClose={() => setShowProfileModal(false)} />
+      <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} />
+      <WelcomeModal isOpen={showWelcome} onClose={() => setShowWelcome(false)} />
+      {showTrophyRoom && <TrophyRoom isModal onClose={() => setShowTrophyRoom(false)} />}
+    </>
+  );
+}
